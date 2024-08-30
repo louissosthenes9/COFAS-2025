@@ -99,3 +99,7 @@ form {
 span {
     color: red;
 }
+
+.card{
+    border: 1px solid #c1892d;
+}

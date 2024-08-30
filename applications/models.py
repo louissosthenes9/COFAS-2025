@@ -14,8 +14,8 @@ class Application(models.Model):
         ('masters', 'Masters'),
         ('phd', 'PhD'),
     ]
-
-    YEAR_CHOICES = [(str(i), str(i)) for i in range(1, 6)] # miaka 1-5
+    # years 1-5
+    YEAR_CHOICES = [(str(i), str(i)) for i in range(1, 6)]
 
     UNIT_CHOICES = [
         ('ict', 'ICT'),
