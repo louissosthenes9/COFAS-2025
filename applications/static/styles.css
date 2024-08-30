@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header-logo img {
+    max-width: 100px;
+    display: block;
+    margin: 0 auto;
+}
+
+.header-title h1 {
+    font-size: 24px;
+    color: #444444;
+    margin: 10px 0;
+}
+
+.header-title h2 {
+    font-size: 20px;
+    color: #777777;
+    margin: 5px 0;
+}
+
+form {
+    width: 100%;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h3 {
+    font-size: 18px;
+    color: #333333;
+    border-bottom: 2px solid #dddddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.row label {
+    width: 30%;
+    padding-right: 10px;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #333333;
+}
+
+.row input, .row select, .row textarea {
+    width: 70%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.row textarea {
+    height: 100px;
+}
+
+.submit-section {
+    text-align: center;
+}
+
+.btn-cos {
+    padding: 10px 20px;
+    background-color: #c1892d;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-cos:hover {
+    font-size: 18px;
+}
+
+span {
+    color: red;
+}
