@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from django.conf import settings
+from django.conf import settings 
 
 from .form import ApplicationForm
 from .models import Application
@@ -46,3 +46,6 @@ def form(request):
         form = ApplicationForm()
 
     return render(request, 'form.html', {'form': form})
+
+def index(request):
+    return render(request, 'landing.html')

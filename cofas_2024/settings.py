@@ -1,6 +1,7 @@
 
 
-from pathlib import Path
+from pathlib import Path 
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,7 +125,7 @@ MEDIA_URL = 'media/'
 
 # This should already be defined, just ensure it's correct
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # This line tells Django to also look for static files in the 'static' directory you created
+    os.path.join(BASE_DIR, 'static')  # This line tells Django to also look for static files in the 'static' directory you created
 ]
 
 # Collects static files into this directory when using 'python manage.py collectstatic'
