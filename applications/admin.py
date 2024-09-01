@@ -5,14 +5,6 @@ from django.core.mail import send_mail
 
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'gender', 'level_of_study', 'unit', 'department', 'status')
-    search_fields = ('first_name', 'last_name', 'email')
-    list_filter = ('gender', 'level_of_study', 'unit', 'department', 'status')
-    actions = ['export_as_csv', 'approve_applications', 'reject_applications']
-    actions_on_top = True
-    approve_applications = True
-    approve_applications.short_description = 'Approve applications'
-
     def export_as_csv(self, request, queryset):
         import csv
         from django.http import HttpResponse
@@ -58,3 +50,14 @@ class ApplicationAdmin(admin.ModelAdmin):
         self.message_user(request, "Selected applications have been rejected and emails sent.")
 
     reject_applications.short_description = "Reject Selected Applications"
+
+    
+    list_display = ('first_name', 'last_name', 'email', 'gender', 'level_of_study', 'unit', 'department', 'status')
+    search_fields = ('first_name', 'last_name', 'email')
+    list_filter = ('gender', 'level_of_study', 'unit', 'department', 'status')
+    actions = [export_as_csv, approve_applications, reject_applications]
+    actions_on_top = True
+    approve_applications = True
+    approve_applications.short_description = 'Approve applications'
+
+    
