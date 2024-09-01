@@ -56,8 +56,6 @@ class ApplicationAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'email')
     list_filter = ('gender', 'level_of_study', 'unit', 'department', 'status')
     actions = [export_as_csv, approve_applications, reject_applications]
-    actions_on_top = True
-    approve_applications = True
-    approve_applications.short_description = 'Approve applications'
+
 
     
