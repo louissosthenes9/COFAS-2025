@@ -25,6 +25,12 @@ class Application(models.Model):
         ('research', 'Research and Development'),
     ]
 
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
     DEPARTMENT_CHOICES = [
         ('software', 'Software Development'),
         ('networking', 'Computer Networking'),
@@ -50,7 +56,7 @@ class Application(models.Model):
     reference_letter = models.FileField(upload_to='reference_letters/',validators=[validate_file_extension])
     resume = models.FileField(upload_to='resumes/',validators=[validate_file_extension])
     academic_transcripts = models.FileField(upload_to='transcripts/',validators=[validate_file_extension])
-
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
