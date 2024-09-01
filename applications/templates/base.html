@@ -5,7 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COSTECH Field Placement Application</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Custom JS -->
+        <script defer src="{% static app.js %}"></script>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
@@ -13,16 +20,32 @@
     <script src="{% static 'js/app.js' %}"></script>
 </head>
 <body>
-     <header class="text-center mb-4">
-            <div class="header-logo mb-3">
-                <a href='https://www.costech.or.tz/'>
-                    <img src="{% static 'images/costechlogo.png' %}" alt="COSTECH Logo" class="img-fluid" height="20" width="20">
-                </a>
-             </div>
-            <h1 class="h3 font-weight-bold">TANZANIA COMMISSION FOR SCIENCE AND TECHNOLOGY (COSTECH)</h1>
-            <h2 class="h4 text-muted">Field Placement Application (COFAS)</h2>
-        </header>
+    <!-- topbar --> 
+    <main class="container-fluid text-center d-flex p-2 justify-content-between px-md-0" style="background-color: #c1892d; color: white;" id="home">
+        <div class="mb-3 ms-3">
+            <img class="img-fluid float-start d-none d-md-block" width="150" height="150" src="{% static 'images/Ellipse 799.svg'%}" alt="country logo">
+        </div>
+
+        <div class="mt-4"> 
+            <p class="h2 fw-bolder text-white">
+                TANZANIA COMMISSION FOR SCIENCE AND TECHNOLOGY (COSTECH) <br> <br>
+                <span class="h3" style="color: white;">COSTECH FIELD APPLICATION SYSTEM (COFAS)</span>
+            </p>
+        </div>
+
+        <div class="mt-3 me-3">
+            <img class="img-fluid float-end d-none d-md-block goup" width="150" height="150" src="{% static 'images/costech.png'%}" alt="costech logo">
+        </div>
+    </main>
+    <!-- end of topbar -->
     {% block content %}
     {% endblock %}
+    <!-- footer -->
+    <footer class="custom-bg text-center text-white py-3 mt-auto" style="background-color: #c1892d;">
+        <p>&copy; 2024 COSTECH Field Application System. All rights reserved.</p>
+        <p><a href="#" style="color: white; text-decoration: none;" onmouseover=" this.style.color='#a07a2d';" onmouseout=" this.style.color='white';">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: none;" onmouseover=" this.style.color='#a07a2d';" onmouseout=" this.style.color='white';">Terms of Service</a></p>
+    </footer>
+    <!-- end of footer -->
+
 </body>
 </html>
