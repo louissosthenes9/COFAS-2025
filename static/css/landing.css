@@ -1,0 +1,112 @@
+.custom-bg{
+    background-color: #c1892d;
+    }
+
+    .font:hover{
+    font-size: 30px;
+    }
+
+    .font{
+    font-size: 22px;
+    }
+
+    
+    :root {
+    --primary-color: #ffffff; /* White */
+    --on-primary-color: #c1892d; /* Goldish Brown */
+    --text-color: #333333; /* Dark Gray for text */
+    }
+
+    body {
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    background-color: var(--primary-color);
+    }
+
+    .custom-bg {
+    background-color: var(--on-primary-color);
+    }
+
+
+    .section-header {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--on-primary-color);
+    }
+
+    .btn-custom {
+    background-color: #c1892d;
+    color: white;
+    border-radius: 30px;
+    }
+
+    .btn-custom:hover {
+    background-color: #a07a2d; /* Darker shade of the on-primary color */
+    color: var(--primary-color);
+    }
+
+    footer {
+    background-color: var(--on-primary-color);
+    color: var(--primary-color);
+    }
+
+    footer a {
+    color: var(--primary-color);
+    }
+
+    footer a:hover {
+    color: #a07a2d; /* Darker shade of the on-primary color */
+    }
+
+    .colo{
+    color: #c1892d;
+    }
+
+
+    .dotted-border-effect {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #c1892d;
+    }
+
+    .dotted-border-effect::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #c1892d; /* Solid line color */
+    box-sizing: border-box;
+    animation: solidLineExpand 1.5s ease-out forwards, addDots 2s ease-out forwards;
+    }
+
+    @keyframes solidLineExpand {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    100% {
+        width: 50%;
+        left: 25%;
+    }
+    }
+
+    @keyframes addDots {
+    0% {
+        background-image: none;
+    }
+    100% {
+        background-image: radial-gradient(circle, #c1892d 1px, transparent 1px);
+        background-size: 8px 8px;
+    }
+    }
