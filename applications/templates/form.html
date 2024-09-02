@@ -1,7 +1,14 @@
 {% extends "base.html" %}
-{% load static %}
-
+{% load static %}  
+ 
 {% block content %}
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<header class="text-center mb-4">
+    <h2 class="h4 text-muted mt-3">Field Placement Application (COFAS)</h2>
+</header>
+
 <div class="container my-5">
     {% if messages %}
         {% for message in messages %}
