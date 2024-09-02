@@ -45,7 +45,7 @@ class Application(models.Model):
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=10)
     email = models.EmailField(unique=True)
     institution = models.CharField(max_length=200)
     program = models.CharField(max_length=200)
