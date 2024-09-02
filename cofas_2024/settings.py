@@ -1,6 +1,6 @@
 
 
-from pathlib import Path 
+from pathlib import Path
 import os
 
 from django.templatetags.static import static
@@ -159,74 +159,61 @@ UNFOLD = {
     "SITE_TITLE": "COFAS DASHBOARD",
     "SITE_HEADER": "COFAS DASHBOARD",
     "SITE_URL": "/",
-    # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
     "SITE_ICON": {
-        "light": lambda request: static("/images/costechlogo1.svgicon-light.svg"),  # light mode
-        "dark": lambda request: static("/images/costechlogo1.svg"),  # dark mode
+        "light": lambda request: static("/images/costechlogo1.svg"),
+        "dark": lambda request: static("/images/costechlogo1.svg"),
     },
-    # "SITE_LOGO": lambda request: static("logo.svg"),  # both modes, optimise for 32px height
     "SITE_LOGO": {
-        "light": lambda request: static("/images/costechlogo1.svg"),  # light mode
-        "dark": lambda request: static("/images/costechlogo1.svg"),  # dark mode
+        "light": lambda request: static("/images/costechlogo1.svg"),
+        "dark": lambda request: static("/images/costechlogo1.svg"),
     },
-    "SITE_SYMBOL": "speed",  # symbol from icon set
-    "SITE_FAVICONS": [
-        {
-            "rel": "icon",
-            "sizes": "32x32",
-            "type": "image/svg+xml",
-            "href": lambda request: static("favicon.svg"),
-        },
-    ],
-    "SHOW_HISTORY": True, # show/hide "History" button, default: True
-    "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
+    "SITE_SYMBOL": "speed",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
 
     "LOGIN": {
         "image": lambda request: static("sample/login-bg.jpg"),
-        "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
+        "redirect_after": lambda request: reverse_lazy("admin:index"),
     },
 
     "COLORS": {
         "primary": {
-            "50": "250 245 255",
-            "100": "243 232 255",
-            "200": "233 213 255",
-            "300": "216 180 254",
-            "400": "192 132 252",
-            "500": "168 85 247",
-            "600": "147 51 234",
-            "700": "126 34 206",
-            "800": "107 33 168",
-            "900": "88 28 135",
-            "950": "59 7 100",
+            "50": "251 243 227",
+            "100": "247 232 199",
+            "200": "240 210 143",
+            "300": "233 188 87",
+            "400": "226 166 31",
+            "500": "193 137 45",  # #c1892d
+            "600": "154 110 36",
+            "700": "116 82 27",
+            "800": "77 55 18",
+            "900": "39 27 9",
+            "950": "19 14 4",
         },
     },
-    "EXTENSIONS": {
-        "modeltranslation": {
-            "flags": {
-                "en": "🇬🇧",
-                "fr": "🇫🇷",
-                "nl": "🇧🇪",
-            },
-        },
-    },
+
     "SIDEBAR": {
-        "show_search": False,  # Search in applications and models names
-        "show_all_applications": False,  # Dropdown with all applications and models
+        "show_search": False,
+        "show_all_applications": False,
         "navigation": [
             {
-                "title": _("Navigation"),
-                "separator": True,  # Top border
-                "collapsible": True,  # Collapsible group of links
+                "title": _("COSTECH ADMIN"),
                 "items": [
                     {
-                        "title": _("Dashboard"),
-                        "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
-                        "link": reverse_lazy("admin:index"),
-                        "badge": "Costech Admin",
-                        "permission": lambda request: request.user.is_superuser,
+                        "title": _("Applications"),
+                        "icon": "apps",
+                        "link": reverse_lazy("admin:app_list", args=("applications",)),
                     },
-
+                    {
+                        "title": _("Settings"),
+                        "icon": "settings",
+                        "link": reverse_lazy("admin:app_list", args=("auth",)),
+                    },
+                    {
+                        "title": _("Analytics"),
+                        "icon": "analytics",
+                        "link": "#",
+                    },
                 ],
             },
         ],
