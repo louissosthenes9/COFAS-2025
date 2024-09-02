@@ -97,11 +97,27 @@ form {
 }
 
 /* span {
+/* span {
     color: red;
+} */
+ 
 } */
  
 .card{
     border: 1px solid #c1892d;
+}
+
+footer {
+    background-color: #c1892d;
+    color: white;
+}
+
+footer a {
+    color: white;
+}
+
+footer a:hover {
+    color: #a07a2d; /* Darker shade of the on-primary color */
 }
 
 footer {

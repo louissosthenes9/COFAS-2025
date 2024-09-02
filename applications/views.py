@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings 
+from django.conf import settings 
 
 from .form import ApplicationForm
 from .models import Application
