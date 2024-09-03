@@ -148,8 +148,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = '8edb6f7b069c5f'
-EMAIL_HOST_PASSWORD = '********9088'
+EMAIL_HOST_PASSWORD = '40577e6b2b9088'
 EMAIL_PORT = '2525'
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
 
 from django.templatetags.static import static
 from django.urls import reverse_lazy

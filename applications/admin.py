@@ -5,25 +5,27 @@ from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.models import User, Group
 from django.utils.html import format_html
 from unfold.admin import ModelAdmin
-from import_export.admin import ImportExportModelAdmin
-from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
 from .models import Application
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin):
     pass
+
 
 @admin.register(Group)
 class GroupAdmin(BaseGroupAdmin, ModelAdmin):
     pass
 
+
 @admin.register(Application)
 class ApplicationAdmin(ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'gender', 'level_of_study', 'unit', 'department', 'status', 'action_buttons')
-    search_fields = ('first_name', 'last_name', 'email')
+    actions = ['export_as_csv', 'approve_application', 'reject_application']
+    list_display = ('first_name', 'last_name', 'gender', 'unit', 'department', 'status', 'action_buttons')
+    search_fields = ('first_name', 'last_name')
     list_filter = ('gender', 'level_of_study', 'unit', 'department', 'status')
 
     @admin.action(description='Export as CSV')
@@ -37,8 +39,11 @@ class ApplicationAdmin(ModelAdmin):
         writer.writerow(['First Name', 'Last Name', 'Email', 'Gender', 'Level of Study', 'Unit', 'Department'])
 
         for application in queryset:
-            writer.writerow([application.first_name, application.last_name, application.email, application.gender,
-                             application.level_of_study, application.unit, application.department])
+            writer.writerow([
+                application.first_name, application.last_name, application.email,
+                application.gender, application.level_of_study,
+                application.unit, application.department
+            ])
 
         return response
 
@@ -70,12 +75,15 @@ class ApplicationAdmin(ModelAdmin):
             )
         self.message_user(request, "Selected applications have been rejected and emails sent.")
 
+    @staticmethod
+    def view_application(obj):
+        return format_html('<a class="button" href="{}">View</a>', f"/admin/applications/application/{obj.pk}/")
+
     def action_buttons(self, obj):
         return format_html(
-            '<a class="button" href="{}/change/">Edit</a> '
-            '<a class="button" href="{}/" style="background:green;">Approve</a> '
-            '<a class="button" href="{}/">Reject</a>',
-            obj.id, obj.id, obj.id
+            '<a class="button" href="{}">Edit</a> <a class="button" href="{}">View</a>',
+            f"/admin/applications/application/{obj.pk}/change/",
+            f"/admin/applications/application/{obj.pk}/"
         )
 
     action_buttons.short_description = 'Actions'
