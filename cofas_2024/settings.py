@@ -43,12 +43,6 @@ INSTALLED_APPS = [
     "unfold.contrib.inlines",
     "unfold.contrib.import_export",
     "unfold.contrib.simple_history",
-    "unfold",
-    "unfold.contrib.filters",
-    "unfold.contrib.forms",
-    "unfold.contrib.inlines",
-    "unfold.contrib.import_export",
-    "unfold.contrib.simple_history",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,10 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "applications.apps.ApplicationsConfig",
     "bootstrap5",
-
-    "applications.apps.ApplicationsConfig",
-    "bootstrap5",
-
 ]
 
 MIDDLEWARE = [
@@ -106,12 +96,7 @@ DATABASES = {
         'PASSWORD': 'root', #ur db password
         'HOST': 'localhost',
         'PORT': '3306',
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cofas',  #database name
-        'USER': 'root',
-        'PASSWORD': 'root', #ur db password
-        'HOST': 'localhost',
-        'PORT': '3306',
+
     }
 }
 
