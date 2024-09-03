@@ -1,10 +1,18 @@
 
 
 from pathlib import Path
+import os
+
+from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+MAX_UPLOAD_SIZE = 5242880  # 5MB
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -21,13 +29,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+    "unfold.contrib.import_export",
+    "unfold.contrib.simple_history",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "applications.apps.ApplicationsConfig"
+    "applications.apps.ApplicationsConfig",
+    "bootstrap5",
+
 ]
 
 MIDDLEWARE = [
@@ -67,8 +83,12 @@ WSGI_APPLICATION = 'cofas_2024.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cofas',  #database name
+        'USER': 'root',
+        'PASSWORD': 'root', #ur db password
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -113,7 +133,7 @@ MEDIA_URL = 'media/'
 
 # This should already be defined, just ensure it's correct
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # This line tells Django to also look for static files in the 'static' directory you created
+    os.path.join(BASE_DIR, 'static')  # This line tells Django to also look for static files in the 'static' directory you created
 ]
 
 # Collects static files into this directory when using 'python manage.py collectstatic'
@@ -124,3 +144,78 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '8edb6f7b069c5f'
+EMAIL_HOST_PASSWORD = '********9088'
+EMAIL_PORT = '2525'
+
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
+UNFOLD = {
+    "SITE_TITLE": "COFAS DASHBOARD",
+    "SITE_HEADER": "COFAS DASHBOARD",
+    "SITE_URL": "/",
+    "SITE_ICON": {
+        "light": lambda request: static("/images/costechlogo1.svg"),
+        "dark": lambda request: static("/images/costechlogo1.svg"),
+    },
+    "SITE_LOGO": {
+        "light": lambda request: static("/images/costechlogo1.svg"),
+        "dark": lambda request: static("/images/costechlogo1.svg"),
+    },
+    "SITE_SYMBOL": "speed",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+
+    "LOGIN": {
+        "image": lambda request: static("sample/login-bg.jpg"),
+        "redirect_after": lambda request: reverse_lazy("admin:index"),
+    },
+
+    "COLORS": {
+        "primary": {
+            "50": "251 243 227",
+            "100": "247 232 199",
+            "200": "240 210 143",
+            "300": "233 188 87",
+            "400": "226 166 31",
+            "500": "193 137 45",  # #c1892d
+            "600": "154 110 36",
+            "700": "116 82 27",
+            "800": "77 55 18",
+            "900": "39 27 9",
+            "950": "19 14 4",
+        },
+    },
+
+    "SIDEBAR": {
+        "show_search": False,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": _("COSTECH ADMIN"),
+                "items": [
+                    {
+                        "title": _("Applications"),
+                        "icon": "apps",
+                        "link": reverse_lazy("admin:app_list", args=("applications",)),
+                    },
+                    {
+                        "title": _("Settings"),
+                        "icon": "settings",
+                        "link": reverse_lazy("admin:app_list", args=("auth",)),
+                    },
+                    {
+                        "title": _("Analytics"),
+                        "icon": "analytics",
+                        "link": "#",
+                    },
+                ],
+            },
+        ],
+    },
+}

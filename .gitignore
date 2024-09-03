@@ -1,14 +1,5 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
-
 # Byte-compiled / optimized / DLL files
-_pycache_/
+__pycache__/
 *.py[cod]
 *$py.class
 
@@ -59,7 +50,7 @@ coverage.xml
 *.log
 *.pot
 *.pyc
-_pycache_/
+__pycache__/
 local_settings.py
 db.sqlite3
 media/
@@ -116,5 +107,5 @@ venv.bak/
 .vscode/
 .history
 
-# Backup files
+# Backup files
 *.bak

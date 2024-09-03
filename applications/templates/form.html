@@ -1,15 +1,194 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <div class="container my-5">
-        <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
-            {% csrf_token %}
-            {{ form.as_div }}
+<header class="text-center mb-4">
+  <h2 class="h4 text-muted mt-3">Field Placement Application (COFAS)</h2>
+</header>
 
-            <div class="text-center">
-                <button type="submit" class="btn-cos" >Submit Application</button>
+<div class="container my-5">
+  {% if messages %}
+    {% for message in messages %}
+      <div
+        class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    class="needs-validation"
+    novalidate
+  >
+
+    {% csrf_token %}
+
+    <!-- Personal Information Section -->
+    <div class="card my-4">
+      <div class="card-header" style="background-color: #c1892d; color: white">
+        <h3 class="h5 mb-0">Personal Information</h3>
+      </div>
+      <div class="card-body">
+        
+        <!-- First 3 fields (3 Names) in one row -->
+        <div class="d-sm-flex justify-content-between flex-wrap ">
+          {% for field in form %}
+            {% if forloop.counter0 < 3 %}
+            <div class="form-group flex-fill mr-3">
+              {{ field.label_tag }}<span style="color: crimson">*</span>
+              {{ field }}
+              {% if field.errors %}
+                {% for error in field.errors %}
+                  <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
             </div>
-        </form>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- 4th field in its own row -->
+        {% for field in form %}
+          {% if forloop.counter0 == 3 %}
+          <div class="form-group">
+            {{ field.label_tag }}<span style="color: crimson">*</span>
+            {{ field }}
+            {% if field.errors %}
+              {% for error in field.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+              {% endfor %}
+            {% endif %}
+            {% if field.help_text %}
+              <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+          {% endif %}
+        {% endfor %}
+
+        <!-- 5th and 6th fields in one row -->
+        <div class="d-flex justify-content-between flex-wrap">
+          {% for field in form %}
+            {% if forloop.counter0 >= 4 and forloop.counter0 <= 5 %}
+            <div class="form-group flex-fill mr-3">
+              {{ field.label_tag }}<span style="color: crimson">*</span>
+              {{ field }}
+              {% if field.errors %}
+                {% for error in field.errors %}
+                  <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- 7th and 8th fields in one row -->
+        <div class="d-flex justify-content-between flex-wrap .flex-grow-0">
+          {% for field in form %}
+            {% if forloop.counter0 >= 6 and forloop.counter0 <= 7 %}
+            <div class="form-group flex-fill mr-3">
+              {{ field.label_tag }}<span style="color: crimson">*</span>
+              {{ field }}
+              {% if field.errors %}
+                {% for error in field.errors %}
+                  <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- 9th and 10th fields in one row -->
+        <div class="d-flex justify-content-between flex-wrap">
+          {% for field in form %}
+            {% if forloop.counter0 >= 8 and forloop.counter0 <= 9 %}
+            <div class="form-group flex-fill mr-3">
+              {{ field.label_tag }}<span style="color: crimson">*</span>
+              {{ field }}
+              {% if field.errors %}
+                {% for error in field.errors %}
+                  <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
     </div>
-{% endblock  %}
+
+    <!-- Field Placement Details Section -->
+    <div class="card my-4">
+      <div class="card-header" style="background-color: #c1892d; color: white">
+        <h3 class="h5 mb-0">Field Placement Details</h3>
+      </div>
+      <div class="card-body">
+
+        <!-- 11th and 12th fields in one row -->
+        <div class="d-flex justify-content-between flex-wrap">
+          {% for field in form %}
+            {% if forloop.counter0 >= 10 and forloop.counter0 <= 11 %}
+            <div class="form-group flex-fill mr-3">
+              {{ field.label_tag }}<span style="color: crimson">*</span>
+              {{ field }}
+              {% if field.errors %}
+                {% for error in field.errors %}
+                  <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Remaining fields each in its own row -->
+        {% for field in form %}
+          {% if forloop.counter0 > 11 %}
+          <div class="form-group mb-4">
+            {{ field.label_tag }}<span style="color: crimson">*</span>
+            {{ field }}
+            {% if field.errors %}
+              {% for error in field.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+              {% endfor %}
+            {% endif %}
+            {% if field.help_text %}
+              <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="text-center">
+      <button type="submit" class="btn-cos">Submit Application</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
