@@ -4,10 +4,18 @@ from pathlib import Path
 import os
 
 from django.templatetags.static import static
+import os
+
+from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+MAX_UPLOAD_SIZE = 5242880  # 5MB
 FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
@@ -35,12 +43,21 @@ INSTALLED_APPS = [
     "unfold.contrib.inlines",
     "unfold.contrib.import_export",
     "unfold.contrib.simple_history",
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+    "unfold.contrib.import_export",
+    "unfold.contrib.simple_history",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "applications.apps.ApplicationsConfig",
+    "bootstrap5",
+
     "applications.apps.ApplicationsConfig",
     "bootstrap5",
 
@@ -83,6 +100,12 @@ WSGI_APPLICATION = 'cofas_2024.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cofas',  #database name
+        'USER': 'root',
+        'PASSWORD': 'root', #ur db password
+        'HOST': 'localhost',
+        'PORT': '3306',
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cofas',  #database name
         'USER': 'root',
