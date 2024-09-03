@@ -110,3 +110,35 @@
         background-size: 8px 8px;
     }
     }
+
+    /* Base styling for nav items */
+.nav-pills .nav-link {
+    color: white !important; /* Text color */
+    background-color: transparent !important; /* Remove default background color */
+    position: relative; /* Needed for positioning the underline */
+    text-decoration: none; /* Remove default underline */
+    padding-bottom: 5px; /* Ensure space for underline */
+}
+
+/* Underline effect on hover */
+.nav-pills .nav-link:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Position at the bottom of the link */
+    left: 0;
+    width: 100%;
+    height: 2px; /* Thickness of the underline */
+    background-color: white !important; /* Underline color */
+    transition: background-color 0.3s ease; /* Smooth transition for underline color */
+}
+
+/* Active item styling */
+.nav-pills .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Position at the bottom of the link */
+    left: 0;
+    width: 100%;
+    height: 2px; /* Thickness of the underline */
+    background-color: white !important; /* Underline color */
+}

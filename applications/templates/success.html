@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}  
+ 
+{% block content %}
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/redirect.css' %}">
+<div class="d-flex justify-content-center align-items-center col-sm-12">
+    <div class="card my-3" >
+        <div class="card-header">
+            Application Submitted
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success" role="alert">
+                Your application has been successfully submitted!
+            </div>
+            <p>Please wait for an approval email that will be sent to <br>
+                <span style="color: #c1892d; font-weight: bold;"> {{ email }}</span><br>
+                    We appreciate your patience.</p>
+            <a href="{% url 'index' %}" class="btn btn-back">Go Back to Home</a>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
+
