@@ -32,7 +32,7 @@ class ApplicationAdmin(ModelAdmin):
     list_filter = ('gender', 'level_of_study', 'unit', 'department', 'status')
 
     @admin.action(description='Export as CSV')
-    def export_as_csv(self, request,queryset):
+    def export_as_csv(self, request, queryset):
         import csv
         from django.http import HttpResponse
 
@@ -90,4 +90,4 @@ class ApplicationAdmin(ModelAdmin):
     action_buttons.allow_tags = True
 
     def get_list_display_links(self, request, list_display):
-        return None  # This removes the default link from the first column
+        return None
