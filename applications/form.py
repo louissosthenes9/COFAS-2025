@@ -27,9 +27,13 @@ class ApplicationForm(forms.ModelForm):
         phone_number = self.cleaned_data.get('phone_number')
 
                 # check if the phone number is 10 digits long
-        if not re.match(r'^\d{10}$', phone_number):
-            raise ValidationError("Phone number must be 10 digits long.")
-        return phone_number
+        def validate_phone_number(phone_number):
+            if not phone_number.isdigit():
+                raise ValidationError("Phone number must be numerical.")
+            if len(phone_number) != 10:
+                raise ValidationError("Phone number must be 10 digits long.")
+
+            return phone_number
 
     def clean(self):
         cleaned_data = super().clean()
