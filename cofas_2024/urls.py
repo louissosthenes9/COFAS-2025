@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
-
+from applications import views
 from cofas_2024 import settings
 
 urlpatterns = [
