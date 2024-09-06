@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "applications.apps.ApplicationsConfig",
     "bootstrap5",
+    'django_extensions',
+    'django.template.context_processors'
+
 ]
 
 MIDDLEWARE = [
@@ -222,7 +225,7 @@ UNFOLD = {
                     {
                         "title": _("Analytics"),
                         "icon": "analytics",
-                        "link": "#",
+                        "link": reverse_lazy("admin_analytics"),
                     },
                 ],
             },
