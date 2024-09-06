@@ -53,7 +53,7 @@ class Application(models.Model):
     def validate_program_input(value):
         # Allow letters and spaces for programs
         if not re.search(r'^[A-Za-z\s]+$', value):
-            raise ValidationError("Program can only contain letters and spaces.")
+            raise ValidationError("This field can only contain letters and spaces.")
 
     @staticmethod
     def validate_single_name(value):
