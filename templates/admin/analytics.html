@@ -1,0 +1,181 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; {% trans 'Analytics' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="container mt-5">
+        <h1 class="mb-4">Application Analytics Dashboard</h1>
+
+        <!-- Summary Cards -->
+        <div class="row mb-5">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Applications</h5>
+                        <p class="card-text">{{ total_applications }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Accepted Applications</h5>
+                        <p class="card-text">{{ accepted_applications }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">Pending Applications</h5>
+                        <p class="card-text">{{ pending_applications }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-white bg-danger">
+                    <div class="card-body">
+                        <h5 class="card-title">Rejected Applications</h5>
+                        <p class="card-text">{{ rejected_applications }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Applications by Status</h5>
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Applications by Level of Study</h5>
+                        <canvas id="levelChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Applications by Department</h5>
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Applications by Gender</h5>
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+<script>
+    // Properly serialize Python dictionaries to JSON
+    var status_counts_data = JSON.parse('{{ status_counts|escapejs }}');
+    var level_counts_data = JSON.parse('{{ level_counts|escapejs }}');
+    var department_counts_data = JSON.parse('{{ department_counts|escapejs }}');
+    var gender_counts_data = JSON.parse('{{ gender_counts|escapejs }}');
+    
+    console.log('Status Counts:', status_counts_data);
+    console.log('Level Counts:', level_counts_data);
+    console.log('Department Counts:', department_counts_data);
+    console.log('Gender Counts:', gender_counts_data);
+
+    function createChart(ctx, type, labels, data, label) {
+        return new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: type === 'bar' ? {
+                    y: {
+                        beginAtZero: true
+                    }
+                } : {}
+            }
+        });
+    }
+
+    function processObjectData(data) {
+        return {
+            labels: Object.keys(data),
+            data: Object.values(data)
+        };
+    }
+
+    // Create charts after the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        if (status_counts_data && typeof status_counts_data === 'object') {
+            var { labels, data } = processObjectData(status_counts_data);
+            createChart(document.getElementById('statusChart').getContext('2d'), 'bar', labels, data, 'Applications by Status');
+        } else {
+            console.error('Status data is not in the expected format:', status_counts_data);
+        }
+
+        if (level_counts_data && typeof level_counts_data === 'object') {
+            var { labels, data } = processObjectData(level_counts_data);
+            createChart(document.getElementById('levelChart').getContext('2d'), 'pie', labels, data, 'Applications by Level of Study');
+        } else {
+            console.error('Level data is not in the expected format:', level_counts_data);
+        }
+
+        if (department_counts_data && typeof department_counts_data === 'object') {
+            var { labels, data } = processObjectData(department_counts_data);
+            createChart(document.getElementById('departmentChart').getContext('2d'), 'doughnut', labels, data, 'Applications by Department');
+        } else {
+            console.error('Department data is not in the expected format:', department_counts_data);
+        }
+
+        if (gender_counts_data && typeof gender_counts_data === 'object') {
+           var { labels, data } = processObjectData(gender_counts_data);
+            createChart(document.getElementById('genderChart').getContext('2d'), 'bar', labels, data, 'Applications by Gender');
+        } else {
+            console.error('Gender data is not in the expected format:', gender_counts_data);
+        }
+    });
+</script>
+{% endblock %}
