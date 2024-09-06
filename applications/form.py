@@ -23,17 +23,17 @@ class ApplicationForm(forms.ModelForm):
         self.fields['academic_transcripts'].widget = forms.ClearableFileInput(attrs={'accept': '.pdf,.doc,.docx'})
 
 
-    def clean_phone_number(self):
-        phone_number = self.cleaned_data.get('phone_number')
+def clean_phone_number(self):
+    phone_number = self.cleaned_data.get('phone_number')
+    
+    if phone_number:
+        if not phone_number.isdigit():
+            raise ValidationError("Phone number must be numerical.")
+        if len(phone_number) != 10:
+            raise ValidationError("Phone number must be 10 digits long.")
+    
+    return phone_number
 
-                # check if the phone number is 10 digits long
-        def validate_phone_number(phone_number):
-            if not phone_number.isdigit():
-                raise ValidationError("Phone number must be numerical.")
-            if len(phone_number) != 10:
-                raise ValidationError("Phone number must be 10 digits long.")
-
-            return phone_number
 
     def clean(self):
         cleaned_data = super().clean()

@@ -16,7 +16,7 @@ def form(request):
         if form.is_valid():
             try:
                 application = form.save(commit=False)
-                # Handle file uploads...
+                # Handle file uploads if necessary
                 application.save()
 
                 # Store email in session
@@ -30,12 +30,13 @@ def form(request):
             except Exception as e:
                 messages.error(request, f"An error occurred while processing your application: {str(e)}")
         else:
-            # Handle form errors...
-            pass
+            # Handle form errors
+            print(form.errors)  # Print form errors for debugging
     else:
         form = ApplicationForm()
 
     return render(request, 'form.html', {'form': form})
+
 
 
 def index(request):

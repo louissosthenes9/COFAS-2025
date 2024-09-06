@@ -3,7 +3,6 @@ import re
 from django.core.exceptions import ValidationError
 from django.db import models
 
-
 class Application(models.Model):
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -34,6 +33,7 @@ class Application(models.Model):
         ('networking', 'Computer Networking'),
     ]
 
+    @staticmethod
     def validate_phone_number(value):
         if not value:
             raise ValidationError("Phone number cannot be empty.")
@@ -50,32 +50,28 @@ class Application(models.Model):
             raise ValidationError("Only pdf, doc, and docx file formats are allowed.")
 
     @staticmethod
-    def validate_program_input(field_name):
-        def validator(value):
-            if re.search(r'^[A-Za-z\s]+\.?$', value):
-                raise ValidationError(f"{field_name} can only contain letters.")
-
-        return validator
+    def validate_program_input(value):
+        # Allow letters and spaces for programs
+        if not re.search(r'^[A-Za-z\s]+$', value):
+            raise ValidationError("Program can only contain letters and spaces.")
 
     @staticmethod
-    def validate_string_input(field_name):
-        def validator(value):
-            if not value.strip():
-                raise ValidationError(f"{field_name} cannot be empty or whitespace.")
-            if re.search(r'[^A-Za-z]', value):
-                raise ValidationError(f"{field_name} can only contain letters with no spaces.")
+    def validate_single_name(value):
+        # Check if the name contains only a single word
+        if ' ' in value:
+            raise ValidationError("This field can only contain a single name without spaces.")
 
-        return validator
-
-    first_name = models.CharField(max_length=100, validators=[validate_string_input("First name")])
-    middle_name = models.CharField(max_length=100, blank=True, null=True,
-                                   validators=[validate_string_input("Middle name")])
-    last_name = models.CharField(max_length=100, validators=[validate_string_input("Last name")])
+    # Fields with single-name validation
+    first_name = models.CharField(max_length=100, validators=[validate_single_name])
+    middle_name = models.CharField(max_length=100, blank=True, null=True, validators=[validate_single_name])
+    last_name = models.CharField(max_length=100, validators=[validate_single_name])
+    
+    # Other fields with specific validation
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     phone_number = models.CharField(max_length=10, validators=[validate_phone_number], blank=False, null=False)
     email = models.EmailField(unique=True)
     institution = models.CharField(max_length=200)
-    program = models.CharField(max_length=200, validators=[validate_program_input('Program')])
+    program = models.CharField(max_length=200, validators=[validate_program_input])
     level_of_study = models.CharField(max_length=20, choices=LEVEL_CHOICES)
     year_of_study = models.CharField(max_length=2, choices=YEAR_CHOICES)
     unit = models.CharField(max_length=50, choices=UNIT_CHOICES)
@@ -90,10 +86,10 @@ class Application(models.Model):
 
     def clean(self):
         super().clean()
-        for field_name in ['first_name', 'middle_name', 'last_name', 'program']:
+        for field_name in ['first_name', 'middle_name', 'last_name']:
             value = getattr(self, field_name)
             if value:  # Only validate if the field has a value (to handle optional fields)
-                self.validate_string_input(field_name.replace('_', ' ').title())(value)
+                self.validate_single_name(value)
         self.validate_phone_number(self.phone_number)
 
     def save(self, *args, **kwargs):
