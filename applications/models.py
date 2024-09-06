@@ -70,7 +70,7 @@ class Application(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     phone_number = models.CharField(max_length=10, validators=[validate_phone_number], blank=False, null=False)
     email = models.EmailField(unique=True)
-    institution = models.CharField(max_length=200)
+    institution = models.CharField(max_length=200, validators=[validate_program_input])
     program = models.CharField(max_length=200, validators=[validate_program_input])
     level_of_study = models.CharField(max_length=20, choices=LEVEL_CHOICES)
     year_of_study = models.CharField(max_length=2, choices=YEAR_CHOICES)
