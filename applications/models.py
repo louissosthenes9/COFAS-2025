@@ -2,6 +2,7 @@ import os
 import re
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.core.validators import EmailValidator
 
 class Application(models.Model):
     GENDER_CHOICES = [
@@ -34,6 +35,15 @@ class Application(models.Model):
     ]
 
     @staticmethod
+    def validate_string_input(field_name):
+        def validator(value):
+            if not value.strip():
+                raise ValidationError(f"{field_name} cannot be empty or whitespace.")
+            if re.search(r'[^A-Za-z]', value):
+                raise ValidationError(f"{field_name} can only contain letters with no spaces.")
+
+        return validator
+    @staticmethod
     def validate_phone_number(value):
         if not value:
             raise ValidationError("Phone number cannot be empty.")
@@ -61,7 +71,6 @@ class Application(models.Model):
         if ' ' in value:
             raise ValidationError("This field can only contain a single name without spaces.")
 
-        return validator
 
     first_name = models.CharField(max_length=100, validators=[validate_string_input("First name")],)
     middle_name = models.CharField(max_length=100, blank=True, null=True,
@@ -71,7 +80,7 @@ class Application(models.Model):
     phone_number = models.PositiveBigIntegerField(max_length=10, blank=False, null=False,)
     email = models.EmailField(unique=True, validators=[EmailValidator("Enter a valid email address")],)
     institution = models.CharField(max_length=200,)
-    program = models.CharField(max_length=200, validators=[validate_string_input('Program')], )
+    program = models.CharField(max_length=200, validators=[validate_program_input('Program')], )
     level_of_study = models.CharField(max_length=20, choices=LEVEL_CHOICES,)
     year_of_study = models.CharField(max_length=2, choices=YEAR_CHOICES)
     unit = models.CharField(max_length=50, choices=UNIT_CHOICES)
