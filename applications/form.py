@@ -4,12 +4,23 @@ from .models import Application
 from django.core.exceptions import ValidationError
 
 
+class RequiredFieldsModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(RequiredFieldsModelForm, self).__init__(*args, **kwargs)
+        for bound_field in self:
+            if (
+                    hasattr(bound_field, "field") and
+                    bound_field.name in self.Meta.required_fields
+            ):
+                bound_field.field.widget.attrs["required"] = "required"
 
-class ApplicationForm(forms.ModelForm):
+
+class ApplicationForm(RequiredFieldsModelForm):
     class Meta:
         model = Application
+        required_fields = ['reference_letter', 'resume']
         fields = '__all__'
-        exclude =['status']
+        exclude = ['status']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,23 +28,12 @@ class ApplicationForm(forms.ModelForm):
         self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'example@gmail.com'})
         self.fields['phone_number'].widget.attrs.update({'class': 'form-control ', 'placeholder': '07xxxxxxxx'})
 
-
-        self.fields['reference_letter'].widget = forms.ClearableFileInput(attrs={'accept': '.pdf,.doc,.docx'})
-        self.fields['resume'].widget = forms.ClearableFileInput(attrs={'accept': '.pdf,.doc,.docx'})
-        self.fields['academic_transcripts'].widget = forms.ClearableFileInput(attrs={'accept': '.pdf,.doc,.docx'})
-
-
-def clean_phone_number(self):
-    phone_number = self.cleaned_data.get('phone_number')
-    
-    if phone_number:
-        if not phone_number.isdigit():
-            raise ValidationError("Phone number must be numerical.")
-        if len(phone_number) != 10:
-            raise ValidationError("Phone number must be 10 digits long.")
-    
-    return phone_number
-
+        self.fields['reference_letter'].widget = forms.ClearableFileInput(
+            attrs={'accept': '.pdf,.doc,.docx', 'required': 'required'})
+        self.fields['resume'].widget = forms.ClearableFileInput(
+            attrs={'accept': '.pdf,.doc,.docx', 'required': 'required'})
+        self.fields['academic_transcripts'].widget = forms.ClearableFileInput(
+            attrs={'accept': '.pdf,.doc,.docx', 'required': 'required'})
 
     def clean(self):
         cleaned_data = super().clean()

@@ -61,25 +61,25 @@ class Application(models.Model):
         if ' ' in value:
             raise ValidationError("This field can only contain a single name without spaces.")
 
-    # Fields with single-name validation
-    first_name = models.CharField(max_length=100, validators=[validate_single_name])
-    middle_name = models.CharField(max_length=100, blank=True, null=True, validators=[validate_single_name])
-    last_name = models.CharField(max_length=100, validators=[validate_single_name])
-    
-    # Other fields with specific validation
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    phone_number = models.CharField(max_length=10, validators=[validate_phone_number], blank=False, null=False)
-    email = models.EmailField(unique=True)
-    institution = models.CharField(max_length=200, validators=[validate_program_input])
-    program = models.CharField(max_length=200, validators=[validate_program_input])
-    level_of_study = models.CharField(max_length=20, choices=LEVEL_CHOICES)
+        return validator
+
+    first_name = models.CharField(max_length=100, validators=[validate_string_input("First name")],)
+    middle_name = models.CharField(max_length=100, blank=True, null=True,
+                                   validators=[validate_string_input("Middle name")],)
+    last_name = models.CharField(max_length=100, validators=[validate_string_input("Last name")],)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, )
+    phone_number = models.PositiveBigIntegerField(max_length=10, blank=False, null=False,)
+    email = models.EmailField(unique=True, validators=[EmailValidator("Enter a valid email address")],)
+    institution = models.CharField(max_length=200,)
+    program = models.CharField(max_length=200, validators=[validate_string_input('Program')], )
+    level_of_study = models.CharField(max_length=20, choices=LEVEL_CHOICES,)
     year_of_study = models.CharField(max_length=2, choices=YEAR_CHOICES)
     unit = models.CharField(max_length=50, choices=UNIT_CHOICES)
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES)
     reference_letter = models.FileField(upload_to='reference_letters/', validators=[validate_file_extension])
-    resume = models.FileField(upload_to='resumes/', validators=[validate_file_extension])
-    academic_transcripts = models.FileField(upload_to='transcripts/', validators=[validate_file_extension])
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    resume = models.FileField(upload_to='resumes/', validators=[validate_file_extension],)
+    academic_transcripts = models.FileField(upload_to='transcripts/', validators=[validate_file_extension],)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending',)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
