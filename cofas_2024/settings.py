@@ -25,8 +25,6 @@ MAX_UPLOAD_SIZE = 5242880  # 5MB
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w=2a%^m7)$6p3bfc7%hjv%^u^%sg-24l3^i3(v*95vr0)dc*^m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
